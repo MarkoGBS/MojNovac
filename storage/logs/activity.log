@@ -1,0 +1,42 @@
+{"timestamp":"2026-09-22T22:36:27+00:00","user_id":9,"action":"Registracija naloga"}
+{"timestamp":"2026-09-22T22:36:28+00:00","user_id":9,"action":"Prijava na sistem"}
+{"timestamp":"2026-09-22T22:36:29+00:00","user_id":21,"action":"Prijava na sistem"}
+{"timestamp":"2026-09-22T22:36:29+00:00","user_id":21,"action":"Odgovoreno na zahtev za podršku #3"}
+{"timestamp":"2026-09-22T22:36:30+00:00","user_id":10,"action":"Prijava na sistem"}
+{"timestamp":"2026-09-22T22:36:30+00:00","user_id":22,"action":"Prijava na sistem"}
+{"timestamp":"2026-09-22T22:38:15+00:00","user_id":8,"action":"Poslat zahtev za podršku."}
+{"timestamp":"2026-09-22T22:38:31+00:00","user_id":8,"action":"Odjava sa sistema"}
+{"timestamp":"2026-09-22T22:38:42+00:00","user_id":null,"action":"Neuspešna prijava"}
+{"timestamp":"2026-09-22T22:38:54+00:00","user_id":null,"action":"Neuspešna prijava"}
+{"timestamp":"2026-09-22T22:39:06+00:00","user_id":4,"action":"Prijava na sistem"}
+{"timestamp":"2026-09-23T08:12:02+00:00","user_id":4,"action":"Odjava sa sistema"}
+{"timestamp":"2026-09-23T08:12:39+00:00","user_id":23,"action":"Registracija naloga"}
+{"timestamp":"2026-09-23T08:12:54+00:00","user_id":23,"action":"Prijava na sistem"}
+{"timestamp":"2026-09-23T08:13:04+00:00","user_id":23,"action":"Dodat račun: Racun"}
+{"timestamp":"2026-09-23T08:13:15+00:00","user_id":23,"action":"Uplata: 7000 RSD"}
+{"timestamp":"2026-09-23T08:13:27+00:00","user_id":23,"action":"Transfer: 3600 RSD"}
+{"timestamp":"2026-09-23T08:13:37+00:00","user_id":23,"action":"Poslat zahtev za podršku."}
+{"timestamp":"2026-09-23T08:13:50+00:00","user_id":23,"action":"Odjava sa sistema"}
+{"timestamp":"2026-09-23T08:14:10+00:00","user_id":1,"action":"Prijava na sistem"}
+{"timestamp":"2026-09-23T08:14:22+00:00","user_id":1,"action":"Preuzet izveštaj: transactions.pdf"}
+{"timestamp":"2026-09-23T08:14:24+00:00","user_id":1,"action":"Preuzet izveštaj: transactions.pdf"}
+{"timestamp":"2026-09-23T08:15:01+00:00","user_id":1,"action":"Dodeljen menadžer #4 korisniku #8"}
+{"timestamp":"2026-09-23T08:15:07+00:00","user_id":1,"action":"Dodeljen menadžer #4 korisniku #23"}
+{"timestamp":"2026-09-23T08:15:28+00:00","user_id":1,"action":"Dodata kategorija."}
+{"timestamp":"2026-09-23T08:16:06+00:00","user_id":1,"action":"Preuzet izveštaj: budgets.pdf"}
+{"timestamp":"2026-09-23T08:16:14+00:00","user_id":1,"action":"Odjava sa sistema"}
+{"timestamp":"2026-09-23T08:16:29+00:00","user_id":null,"action":"Neuspešna prijava"}
+{"timestamp":"2026-09-23T08:17:07+00:00","user_id":2,"action":"Prijava na sistem"}
+{"timestamp":"2026-09-23T08:17:12+00:00","user_id":2,"action":"Odjava sa sistema"}
+{"timestamp":"2026-09-23T08:17:26+00:00","user_id":4,"action":"Prijava na sistem"}
+{"timestamp":"2026-09-23T08:17:40+00:00","user_id":4,"action":"Odgovoreno na zahtev za podršku #27"}
+{"timestamp":"2026-09-23T08:17:43+00:00","user_id":4,"action":"Odgovoreno na zahtev za podršku #27"}
+{"timestamp":"2026-09-23T08:17:44+00:00","user_id":4,"action":"Odgovoreno na zahtev za podršku #27"}
+{"timestamp":"2026-09-23T08:18:15+00:00","user_id":4,"action":"Odjava sa sistema"}
+{"timestamp":"2026-09-23T08:18:29+00:00","user_id":8,"action":"Prijava na sistem"}
+{"timestamp":"2026-09-23T08:18:48+00:00","user_id":8,"action":"Odjava sa sistema"}
+{"timestamp":"2026-09-23T08:19:03+00:00","user_id":1,"action":"Prijava na sistem"}
+{"timestamp":"2026-09-23T08:32:01+00:00","user_id":1,"action":"Odjava sa sistema"}
+{"timestamp":"2026-09-23T08:32:13+00:00","user_id":6,"action":"Prijava na sistem"}
+{"timestamp":"2026-09-23T08:32:41+00:00","user_id":6,"action":"Uplata: 10000 RSD"}
+{"timestamp":"2026-09-23T08:32:53+00:00","user_id":6,"action":"Isplata: 4000 RSD"}
