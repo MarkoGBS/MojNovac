@@ -1,0 +1,56 @@
+{% extends 'layouts/base.twig' %}
+{% block title %}{{ user.name }} — {{ app_name }}{% endblock %}
+{% block content %}
+{% set detailPath = '/manager/users/' ~ user.id %}
+<a href="{{ url('/manager') }}">← Nazad</a><h1>{{ user.name }}</h1><p>{{ user.email }}</p>
+
+<h2>Računi</h2>
+<div class="grid three">{% for a in accounts %}<div class="card balance-card"><span>{{ a.name }}</span><strong>{{ a.balance|number_format(2, ',', '.') }} RSD</strong></div>{% endfor %}</div>
+
+<div class="form-card">
+    <h2>Dodaj ili izmeni budžet</h2>
+    <p class="muted">Ako isti period i kategorija već postoje, iznos će biti izmenjen.</p>
+    <form class="form-row wrap" method="post" action="{{ url('/manager/users/' ~ user.id ~ '/budgets') }}">{{ csrf_field() }}
+        <select name="category_id">{% for c in categories %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select>
+        <input type="number" name="amount" min="0.01" step="0.01" placeholder="Iznos" required>
+        <input type="number" name="month" min="1" max="12" value="{{ 'now'|date('n') }}" required>
+        <input type="number" name="year" min="2020" max="2100" value="{{ 'now'|date('Y') }}" required>
+        <button>Sačuvaj</button>
+    </form>
+</div>
+
+<h2 id="budgets">Budžeti</h2>
+<div class="table-wrap"><table><thead><tr><th>Period</th><th>Kategorija</th><th>Iznos</th><th></th></tr></thead><tbody>
+{% for b in budgets %}<tr><td>{{ '%02d'|format(b.month) }}/{{ b.year }}</td><td>{{ b.category_name }}</td><td>{{ b.amount|number_format(2, ',', '.') }}</td><td><form method="post" action="{{ url('/manager/users/' ~ user.id ~ '/budgets/' ~ b.id ~ '/delete') }}">{{ csrf_field() }}<button class="danger">Obriši</button></form></td></tr>
+{% else %}<tr><td colspan="4">Nema budžeta.</td></tr>{% endfor %}</tbody></table></div>
+{% include 'components/pagination.twig' with {pagination: budgetPagination, path: detailPath, parameter: 'budgets_page', fragment: 'budgets'} only %}
+
+<h2 id="transactions">Transakcije</h2>
+<div class="table-wrap"><table><thead><tr><th>Datum</th><th>Račun</th><th>Tip</th><th>Kategorija</th><th>Iznos</th></tr></thead><tbody>
+{% for t in transactions %}<tr><td>{{ t.created_at }}</td><td>{{ t.account_name }}</td><td>{{ t.type }}</td><td>{{ t.category_name|default('-') }}</td><td>{{ t.amount|number_format(2, ',', '.') }}</td></tr>{% else %}<tr><td colspan="5">Nema transakcija.</td></tr>{% endfor %}
+</tbody></table></div>
+{% include 'components/pagination.twig' with {pagination: transactionPagination, path: detailPath, parameter: 'transactions_page', fragment: 'transactions'} only %}
+
+<h2 id="activities">Aktivnosti</h2>
+<div class="table-wrap"><table><thead><tr><th>Datum</th><th>Aktivnost</th></tr></thead><tbody>
+{% for a in activities %}<tr><td>{{ a.created_at }}</td><td>{{ a.action }}</td></tr>{% else %}<tr><td colspan="2">Nema aktivnosti.</td></tr>{% endfor %}
+</tbody></table></div>
+{% include 'components/pagination.twig' with {pagination: activityPagination, path: detailPath, parameter: 'activities_page', fragment: 'activities'} only %}
+
+<h2 id="tickets">Zahtevi za podršku</h2>
+{% set ticketStatuses = {'open': 'Otvoren', 'in_progress': 'U obradi', 'resolved': 'Rešen', 'closed': 'Zatvoren'} %}
+{% for t in tickets %}
+<article class="card">
+    <h3>#{{ t.id }} — {{ t.subject }}</h3>
+    <p class="muted">{{ t.created_at }} · {{ ticketStatuses[t.status]|default(t.status) }}</p>
+    <p>{{ t.message|nl2br }}</p>
+    {% if t.reply is not null %}<p class="muted">Odgovor: {{ t.replied_by_name|default('Menadžer') }}, {{ t.replied_at }}</p>{% endif %}
+    <form method="post" action="{{ page_url(detailPath ~ '/tickets/' ~ t.id ~ '/reply', 'tickets_page', ticketPagination.page) }}">
+        {{ csrf_field() }}
+        <label>{{ t.reply is not null ? 'Izmeni odgovor' : 'Odgovor' }}<textarea name="reply" maxlength="5000" rows="4" required>{{ t.reply }}</textarea></label>
+        <button>Sačuvaj odgovor</button>
+    </form>
+</article>
+{% else %}<p>Korisnik nema zahteve za podršku.</p>{% endfor %}
+{% include 'components/pagination.twig' with {pagination: ticketPagination, path: detailPath, parameter: 'tickets_page', fragment: 'tickets'} only %}
+{% endblock %}

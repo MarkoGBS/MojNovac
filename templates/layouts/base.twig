@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="sr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ app_name }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url('/assets/css/style.css') }}">
+</head>
+<body>
+<nav>
+    <a class="brand" href="{{ url('/') }}">{{ app_name }}</a>
+    <div>
+        <a href="{{ url('/faq') }}">FAQ</a>
+        {% if not auth %}
+            <a href="{{ url('/login') }}">Prijava</a>
+            <a href="{{ url('/register') }}">Registracija</a>
+        {% else %}
+            {% if auth.role == 'user' %}<a href="{{ url('/dashboard') }}">Moj pregled</a>{% endif %}
+            {% if auth.role == 'manager' %}<a href="{{ url('/manager') }}">Menadžer</a>{% endif %}
+            {% if auth.role == 'admin' %}<a href="{{ url('/admin') }}">Administracija</a>{% endif %}
+            <a href="{{ url('/change-password') }}">Promena lozinke</a>
+            <span>{{ auth.name }}</span>
+            <form class="inline" method="post" action="{{ url('/logout') }}">{{ csrf_field() }}<button class="link-button">Odjava</button></form>
+        {% endif %}
+    </div>
+</nav>
+<main class="container">
+    {% if flash_success %}<div class="alert success">{{ flash_success }}</div>{% endif %}
+    {% if flash_error %}<div class="alert error">{{ flash_error }}</div>{% endif %}
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{% extends 'layouts/base.twig' %}
+{% block title %}Menadžer — {{ app_name }}{% endblock %}
+{% block content %}
+<h1>Dodeljeni korisnici</h1>
+<div class="grid three">
+{% for user in users %}
+    <a class="card user-card" href="{{ url('/manager/users/' ~ user.id) }}">
+        <h3>{{ user.name }}</h3><p>{{ user.email }}</p><strong>{{ user.total_balance|number_format(2, ',', '.') }} RSD</strong>
+    </a>
+{% else %}<p>Nijedan korisnik vam još nije dodeljen.</p>{% endfor %}
+</div>
+{% include 'components/pagination.twig' with {pagination: userPagination, path: '/manager', parameter: 'page'} only %}
+{% endblock %}

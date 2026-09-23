@@ -1,0 +1,46 @@
+{% extends 'layouts/base.twig' %}
+{% block title %}Administracija — {{ app_name }}{% endblock %}
+{% block content %}
+<h1>Administracija</h1>
+
+<h2>Izveštaji</h2>
+<div class="grid three">
+{% set reports = {'transactions':'Transakcije','monthly':'Mesečni prihodi/rashodi','budgets':'Budžeti i potrošnja'} %}
+{% for key, label in reports %}<div class="card"><h3>{{ label }}</h3><a class="button small" href="{{ url('/admin/reports/' ~ key ~ '/xlsx') }}">Excel</a> <a class="button secondary small" href="{{ url('/admin/reports/' ~ key ~ '/pdf') }}">PDF</a></div>{% endfor %}
+</div>
+
+<h2 id="users">Korisnici i uloge</h2>
+<div class="table-wrap"><table><thead><tr><th>Ime</th><th>Email</th><th>Uloga / status</th></tr></thead><tbody>
+{% for u in users %}<tr>
+    <td>{{ u.name }}</td><td>{{ u.email }}</td><td><form class="form-row" method="post" action="{{ url('/admin/users/' ~ u.id) }}">{{ csrf_field() }}<select name="role"><option value="user" {{ u.role == 'user' ? 'selected' }}>user</option><option value="manager" {{ u.role == 'manager' ? 'selected' }}>manager</option><option value="admin" {{ u.role == 'admin' ? 'selected' }}>admin</option></select><label><input type="checkbox" name="active" {{ u.active ? 'checked' }}> aktivan</label><button>Sačuvaj</button></form></td>
+</tr>{% endfor %}</tbody></table></div>
+{% include 'components/pagination.twig' with {pagination: userPagination, path: '/admin', parameter: 'users_page', fragment: 'users'} only %}
+
+<section class="grid two">
+<div>
+    <h2 id="assignments">Dodele menadžera</h2>
+    <div class="form-card"><form method="post" action="{{ url('/admin/assignments') }}">{{ csrf_field() }}
+        <label>Menadžer<select name="manager_id">{% for m in managers %}<option value="{{ m.id }}">{{ m.name }}</option>{% endfor %}</select></label>
+        <label>Korisnik<select name="user_id">{% for u in allUsers %}{% if u.role == 'user' %}<option value="{{ u.id }}">{{ u.name }}</option>{% endif %}{% endfor %}</select></label><button>Dodeli</button>
+    </form></div>
+    <ul class="plain-list">{% for a in assignments %}<li>{{ a.manager_name }} → {{ a.user_name }} <form class="inline" method="post" action="{{ url('/admin/assignments/' ~ a.id ~ '/delete') }}">{{ csrf_field() }}<button class="danger small">Ukloni</button></form></li>{% else %}<li>Nema dodela.</li>{% endfor %}</ul>
+    {% include 'components/pagination.twig' with {pagination: assignmentPagination, path: '/admin', parameter: 'assignments_page', fragment: 'assignments'} only %}
+</div>
+<div>
+    <h2 id="categories">Kategorije</h2>
+    <div class="form-card"><form class="form-row" method="post" action="{{ url('/admin/categories') }}">{{ csrf_field() }}<input name="name" placeholder="Naziv" required><select name="type"><option value="expense">Rashod</option><option value="income">Prihod</option></select><button>Dodaj</button></form></div>
+    <ul class="plain-list">{% for c in categories %}<li>{{ c.name }} ({{ c.type }}) — {{ c.active ? 'aktivna' : 'neaktivna' }} <form class="inline" method="post" action="{{ url('/admin/categories/' ~ c.id ~ '/toggle') }}">{{ csrf_field() }}<button class="secondary small">Promeni status</button></form></li>{% endfor %}</ul>
+    {% include 'components/pagination.twig' with {pagination: categoryPagination, path: '/admin', parameter: 'categories_page', fragment: 'categories'} only %}
+</div>
+</section>
+
+<h2 id="tickets">Podrška</h2>
+<div class="table-wrap"><table><thead><tr><th>Korisnik</th><th>Naslov</th><th>Poruka</th><th>Odgovor</th><th>Status</th></tr></thead><tbody>
+{% for t in tickets %}<tr><td>{{ t.user_name }}</td><td>{{ t.subject }}</td><td>{{ t.message|nl2br }}</td><td>{% if t.reply is not null %}{{ t.reply|nl2br }}<br><small class="muted">{{ t.replied_by_name|default('Menadžer') }} · {{ t.replied_at }}</small>{% else %}—{% endif %}</td><td><form class="form-row" method="post" action="{{ url('/admin/tickets/' ~ t.id) }}">{{ csrf_field() }}<select name="status">{% for s in ['open','in_progress','resolved','closed'] %}<option value="{{ s }}" {{ t.status == s ? 'selected' }}>{{ s }}</option>{% endfor %}</select><button>Sačuvaj</button></form></td></tr>{% else %}<tr><td colspan="5">Nema zahteva.</td></tr>{% endfor %}
+</tbody></table></div>
+{% include 'components/pagination.twig' with {pagination: ticketPagination, path: '/admin', parameter: 'tickets_page', fragment: 'tickets'} only %}
+
+<h2 id="activities">Aktivnosti</h2>
+<div class="table-wrap"><table><thead><tr><th>Datum</th><th>Korisnik</th><th>Akcija</th></tr></thead><tbody>{% for a in activities %}<tr><td>{{ a.created_at }}</td><td>{{ a.user_name|default('Sistem') }}</td><td>{{ a.action }}</td></tr>{% endfor %}</tbody></table></div>
+{% include 'components/pagination.twig' with {pagination: activityPagination, path: '/admin', parameter: 'activities_page', fragment: 'activities'} only %}
+{% endblock %}

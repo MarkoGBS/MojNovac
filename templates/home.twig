@@ -1,0 +1,21 @@
+{% extends 'layouts/base.twig' %}
+{% block title %}Početna — {{ app_name }}{% endblock %}
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">Lične finansije bez komplikovanja</p>
+        <h1>Prati svoj novac na jednom mestu.</h1>
+        <p>Dodaj račune, evidentiraj uplate i isplate, prebaci novac i prati mesečni budžet.</p>
+        {% if not auth %}<a class="button" href="{{ url('/register') }}">Napravi nalog</a>{% endif %}
+    </div>
+    <div class="hero-card">
+        <strong>Jednostavno. Pregledno. Korisno.</strong>
+        <p>Bez povezivanja sa pravom bankom — sve operacije su simulacija.</p>
+    </div>
+</section>
+<section class="grid three">
+    <article class="card"><h3>Računi</h3><p>Vodi stanje gotovine, kartice ili štednje.</p></article>
+    <article class="card"><h3>Budžeti</h3><p>Prati planiranu i ostvarenu potrošnju.</p></article>
+    <article class="card"><h3>Izveštaji</h3><p>PDF i Excel pregled finansijskih podataka.</p></article>
+</section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'layouts/base.twig' %}
+{% block title %}Prijava — {{ app_name }}{% endblock %}
+{% block content %}
+<div class="form-card narrow">
+    <h1>Prijava</h1>
+    <form method="post" action="{{ url('/login') }}">
+        {{ csrf_field() }}
+        <label>Email<input type="email" name="email" required></label>
+        <label>Lozinka<input type="password" name="password" required></label>
+        <button>Prijavi se</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% if pagination.pages > 1 %}
+<div class="pagination" role="navigation" aria-label="Stranice liste">
+    {% if pagination.page > 1 %}
+        <a class="button secondary small" href="{{ page_url(path, parameter, pagination.page - 1) }}{{ fragment is defined ? '#' ~ fragment : '' }}" aria-label="Prethodna stranica">← Prethodna</a>
+    {% endif %}
+    <span>Stranica {{ pagination.page }} od {{ pagination.pages }} · Ukupno {{ pagination.total }}</span>
+    {% if pagination.page < pagination.pages %}
+        <a class="button secondary small" href="{{ page_url(path, parameter, pagination.page + 1) }}{{ fragment is defined ? '#' ~ fragment : '' }}" aria-label="Sledeća stranica">Sledeća →</a>
+    {% endif %}
+</div>
+{% endif %}

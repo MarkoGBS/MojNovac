@@ -1,0 +1,18 @@
+{% extends 'layouts/base.twig' %}
+{% block title %}Registracija — {{ app_name }}{% endblock %}
+{% block content %}
+<div class="form-card narrow">
+    <h1>Registracija</h1>
+    <form method="post" action="{{ url('/register') }}">
+        {{ csrf_field() }}
+        <label>Ime<input name="first_name" autocomplete="given-name" maxlength="100" value="{{ old.first_name|default('') }}" required></label>
+        <label>Prezime<input name="last_name" autocomplete="family-name" maxlength="100" value="{{ old.last_name|default('') }}" required></label>
+        <label>Datum rođenja<input type="date" name="date_of_birth" autocomplete="bday" min="1000-01-01" max="{{ max_birth_date }}" value="{{ old.date_of_birth|default('') }}" required></label>
+        <label>Email<input type="email" name="email" autocomplete="email" maxlength="190" value="{{ old.email|default('') }}" required></label>
+        <label>Lozinka<input type="password" name="password" autocomplete="new-password" minlength="8" required></label>
+        <label>Potvrda lozinke<input type="password" name="password_confirmation" autocomplete="new-password" minlength="8" required></label>
+        <p class="muted">Lozinka mora imati najmanje 8 znakova.</p>
+        <button>Napravi nalog</button>
+    </form>
+</div>
+{% endblock %}
